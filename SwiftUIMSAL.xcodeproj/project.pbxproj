@@ -11,9 +11,8 @@
 		54136620278C7F06003E8F1F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5413661F278C7F06003E8F1F /* ContentView.swift */; };
 		54136622278C7F08003E8F1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54136621278C7F08003E8F1F /* Assets.xcassets */; };
 		54136625278C7F08003E8F1F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54136624278C7F08003E8F1F /* Preview Assets.xcassets */; };
-		5413662D278C7F3C003E8F1F /* MSAL in Frameworks */ = {isa = PBXBuildFile; productRef = 5413662C278C7F3C003E8F1F /* MSAL */; };
 		54136633278C836D003E8F1F /* MSALLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54136632278C836D003E8F1F /* MSALLogin.swift */; };
-		54E4A96E278CEEA500864B8A /* sekrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E4A96D278CEEA500864B8A /* sekrets.swift */; };
+		9484DD6298FBDEFFC9D9ED28 /* Pods_SwiftUIMSAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B421D07F1B7C66989B65D02A /* Pods_SwiftUIMSAL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,9 @@
 		54136630278C8005003E8F1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		54136631278C8150003E8F1F /* SwiftUIMSAL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftUIMSAL.entitlements; sourceTree = "<group>"; };
 		54136632278C836D003E8F1F /* MSALLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSALLogin.swift; sourceTree = "<group>"; };
-		54E4A96D278CEEA500864B8A /* sekrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sekrets.swift; sourceTree = "<group>"; };
+		893EE07AE502E2A9BA5CFEFC /* Pods-SwiftUIMSAL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIMSAL.debug.xcconfig"; path = "Target Support Files/Pods-SwiftUIMSAL/Pods-SwiftUIMSAL.debug.xcconfig"; sourceTree = "<group>"; };
+		B421D07F1B7C66989B65D02A /* Pods_SwiftUIMSAL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUIMSAL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C54658F8CF96EF9CDCBE2A9A /* Pods-SwiftUIMSAL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIMSAL.release.xcconfig"; path = "Target Support Files/Pods-SwiftUIMSAL/Pods-SwiftUIMSAL.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,18 +34,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5413662D278C7F3C003E8F1F /* MSAL in Frameworks */,
+				9484DD6298FBDEFFC9D9ED28 /* Pods_SwiftUIMSAL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C49A345733BB2DAAAF1DEE8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B421D07F1B7C66989B65D02A /* Pods_SwiftUIMSAL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3F9FFD3AFAB1AB168D6F4698 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				893EE07AE502E2A9BA5CFEFC /* Pods-SwiftUIMSAL.debug.xcconfig */,
+				C54658F8CF96EF9CDCBE2A9A /* Pods-SwiftUIMSAL.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		54136611278C7F06003E8F1F = {
 			isa = PBXGroup;
 			children = (
 				5413661C278C7F06003E8F1F /* SwiftUIMSAL */,
 				5413661B278C7F06003E8F1F /* Products */,
+				3F9FFD3AFAB1AB168D6F4698 /* Pods */,
+				3C49A345733BB2DAAAF1DEE8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,11 +79,9 @@
 		5413661C278C7F06003E8F1F /* SwiftUIMSAL */ = {
 			isa = PBXGroup;
 			children = (
-				54E4A96A278CDF5D00864B8A /* Data */,
 				54136631278C8150003E8F1F /* SwiftUIMSAL.entitlements */,
 				54136630278C8005003E8F1F /* Info.plist */,
 				54136632278C836D003E8F1F /* MSALLogin.swift */,
-				54E4A96D278CEEA500864B8A /* sekrets.swift */,
 				5413661D278C7F06003E8F1F /* SwiftUIMSALApp.swift */,
 				5413661F278C7F06003E8F1F /* ContentView.swift */,
 				54136621278C7F08003E8F1F /* Assets.xcassets */,
@@ -80,13 +98,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		54E4A96A278CDF5D00864B8A /* Data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -94,9 +105,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 54136628278C7F08003E8F1F /* Build configuration list for PBXNativeTarget "SwiftUIMSAL" */;
 			buildPhases = (
+				0F4E622631909EE0C48EB417 /* [CP] Check Pods Manifest.lock */,
 				54136616278C7F06003E8F1F /* Sources */,
 				54136617278C7F06003E8F1F /* Frameworks */,
 				54136618278C7F06003E8F1F /* Resources */,
+				CF7291D907A1FBA2F7414D7C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -104,7 +117,6 @@
 			);
 			name = SwiftUIMSAL;
 			packageProductDependencies = (
-				5413662C278C7F3C003E8F1F /* MSAL */,
 			);
 			productName = SwiftUIMSAL;
 			productReference = 5413661A278C7F06003E8F1F /* SwiftUIMSAL.app */;
@@ -135,7 +147,6 @@
 			);
 			mainGroup = 54136611278C7F06003E8F1F;
 			packageReferences = (
-				5413662B278C7F3C003E8F1F /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */,
 			);
 			productRefGroup = 5413661B278C7F06003E8F1F /* Products */;
 			projectDirPath = "";
@@ -158,12 +169,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0F4E622631909EE0C48EB417 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftUIMSAL-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF7291D907A1FBA2F7414D7C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftUIMSAL/Pods-SwiftUIMSAL-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftUIMSAL/Pods-SwiftUIMSAL-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftUIMSAL/Pods-SwiftUIMSAL-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		54136616278C7F06003E8F1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54E4A96E278CEEA500864B8A /* sekrets.swift in Sources */,
 				54136633278C836D003E8F1F /* MSALLogin.swift in Sources */,
 				54136620278C7F06003E8F1F /* ContentView.swift in Sources */,
 				5413661E278C7F06003E8F1F /* SwiftUIMSALApp.swift in Sources */,
@@ -291,6 +343,7 @@
 		};
 		54136629278C7F08003E8F1F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 893EE07AE502E2A9BA5CFEFC /* Pods-SwiftUIMSAL.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -298,11 +351,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIMSAL/Preview Content\"";
-				DEVELOPMENT_TEAM = 9A934JYXT5;
+				DEVELOPMENT_TEAM = 4W9BJUAY8P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftUIMSAL/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -312,7 +364,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.arby.SwiftUIMSAL;
+				PRODUCT_BUNDLE_IDENTIFIER = com.microsoft.identitysample2.MSALiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -322,6 +374,7 @@
 		};
 		5413662A278C7F08003E8F1F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C54658F8CF96EF9CDCBE2A9A /* Pods-SwiftUIMSAL.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -329,11 +382,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIMSAL/Preview Content\"";
-				DEVELOPMENT_TEAM = 9A934JYXT5;
+				DEVELOPMENT_TEAM = 4W9BJUAY8P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftUIMSAL/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -343,7 +395,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.arby.SwiftUIMSAL;
+				PRODUCT_BUNDLE_IDENTIFIER = com.microsoft.identitysample2.MSALiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -373,25 +425,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		5413662B278C7F3C003E8F1F /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AzureAD/microsoft-authentication-library-for-objc.git";
-			requirement = {
-				branch = dev;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		5413662C278C7F3C003E8F1F /* MSAL */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5413662B278C7F3C003E8F1F /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */;
-			productName = MSAL;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 54136612278C7F06003E8F1F /* Project object */;
 }

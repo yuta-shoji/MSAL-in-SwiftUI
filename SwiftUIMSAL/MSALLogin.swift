@@ -1,120 +1,185 @@
-//
-//  MSALLogin.swift
-//  SwiftUIMSAL
-//
-//  Created by robevans on 1/10/22.
-//
-
 import Foundation
 import MSAL
 import SwiftUI
-// A lot of this code was from stack overflow https://stackoverflow.com/questions/70654875/im-trying-to-convert-a-msal-login-from-uikit-to-swiftui-and-not-sure-how-i-can?noredirect=1#comment124903620_70654875
-//This is the source of truth the user input will be held here
+import UIKit
+import Combine
 
-class MSALScreenViewModel: ObservableObject, MSALScreenViewModelProtocol{
-
-    ///reference to UIKit
-    var uiViewController: MSALScreenViewControllerProtocol? = nil
-
-    @Published var accountName: String = ""
-    @Published var scopes: [String] = []
-
-
-    //MARK: MyAdsViewControllerProtocol
-    func loadMSALScreen() {
-        print(#function)
-        uiViewController?.loadMSALScreen()
+struct MSALScreenView_UI: UIViewControllerRepresentable {
+    @Binding var userName: String
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
     }
-
-    func getAccountName() -> String {
-        print(#function)
-        return accountName
-    }
-
-}
-
-struct MSALScreenView_UI: UIViewControllerRepresentable{
-    @ObservedObject var viewModel: MSALScreenViewModel
+    
     func makeUIViewController(context: Context) -> some MSALScreenViewController {
-        print(#function)
-        return MSALScreenViewController(viewModel: viewModel)
+        let controller = MSALScreenViewController()
+        controller.delegate = context.coordinator
+        
+        return controller
     }
-
+    
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         print(#function)
     }
-}
-
-class MSALScreenViewController: UIViewController, MSALScreenViewControllerProtocol {
-
-    var uiViewController: MSALScreenViewModelProtocol?
-    ///SwiftUI Delegate
-    var viewModel: MSALScreenViewModelProtocol
-
-    init(viewModel: MSALScreenViewModelProtocol) {
-        print(#function)
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: .main)
-        // Link between UIKit and SwiftUI
-        self.viewModel.uiViewController = self
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print(#function)
-        viewModel.loadMSALScreen()
-    }
-
-    func loadMSALScreen() {
-        let msalModel = MSALScreenViewModel()
-
-        do {
-            let authority = try MSALB2CAuthority(url: URL(string: "https://login.microsoftonline.com/common")!)
-            let pcaConfig = MSALPublicClientApplicationConfig(clientId: clientID, redirectUri: redirectUri, authority: authority)
-            let application = try MSALPublicClientApplication(configuration: pcaConfig)
-            let webViewParameters = MSALWebviewParameters(authPresentationViewController: self)
-            let interactiveParameters = MSALInteractiveTokenParameters(scopes: ["user.read"], webviewParameters: webViewParameters)
-            application.acquireToken(with: interactiveParameters) { (result, error) in
-
-                guard let result = result else {
-                    print("error \(error?.localizedDescription)")
-                    return
-                }
-                if let account = result.account.username {
-                    print("logging \(account)")
-//                    accountName = account
-                    msalModel.accountName = account
-                    msalModel.scopes = result.scopes
-                    print("logging \(result.account.description)")
-                    UIApplication.shared.windows.first {
-                        $0.isKeyWindow
-                    }!.rootViewController = UIHostingController(rootView: ContentView())
-                }
+    
+    class Coordinator: NSObject, MSALScreenViewConrtollerDelegate {
+        
+        var parent: MSALScreenView_UI
+        
+        init(_ msalScreenView: MSALScreenView_UI) {
+            parent = msalScreenView
+        }
+        
+        func updateUserName(userName: String) {
+            DispatchQueue.main.async {
+                print("delegate called")
+                print(userName)
+                self.parent.userName = userName
             }
-        } catch {
-            print("\(#function) logging error \(error)")
         }
     }
 }
 
-//Protocols aren't needed but it makes the code reusable and you can see the connection protocol = interface
-protocol MSALScreenViewModelProtocol{
-    ///Reference to the MSAL  view controller
-    var uiViewController: MSALScreenViewControllerProtocol? { get set }
-
-    ///Tells the viewController to load MSAL screen
-    func loadMSALScreen()
-    func getAccountName() -> String
+protocol MSALScreenViewConrtollerDelegate: AnyObject {
+    func updateUserName(userName: String)
 }
 
-protocol MSALScreenViewControllerProtocol: UIViewController{
-    ///Reference to the SwiftUI ViewModel
-    var viewModel: MSALScreenViewModelProtocol { get set }
+class MSALScreenViewController: UIViewController {
+    let kClientID = "b311b447-9f23-457f-be60-ce4f40552bb2"
+    let kRedirectUri = "msauth.com.microsoft.identitysample2.MSALiOS://auth"
+    let kAuthority = "https://login.microsoftonline.com/organizations"
+    let kGraphEndpoint = "https://graph.microsoft.com/"
+    let kScopes = ["user.read"]
+    
+    weak var delegate: MSALScreenViewConrtollerDelegate? = nil
+    var applicationContext: MSALPublicClientApplication? = nil
+    var webViewParameters: MSALWebviewParameters? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        do {
+            try self.initMSAL()
+        } catch (let err) {
+            print("init error: \(err.localizedDescription)")
+        }
+        
+        
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        button.backgroundColor = .red
+        button.addTarget(self, action: #selector(loadMSALScreen), for: .touchUpInside)
+        view.addSubview(button)
+    }
+    
+    @objc func loadMSALScreen() {
+        guard let applicationContext = self.applicationContext else { return }
+        guard let webViewParameters = self.webViewParameters else { return }
+        
+        let interactiveParameters = MSALInteractiveTokenParameters(scopes: ["user.read"], webviewParameters: webViewParameters)
+        
+        applicationContext.acquireToken(with: interactiveParameters) { (result, error) in
+            guard let result = result else {
+                print("error \(error?.localizedDescription)")
+                return
+            }
+            if let account = result.account.username {
+                print("logging \(account)")
+                self.delegate?.updateUserName(userName: account)
+                print("logging \(result.account.description)")
+            }
+        }
+    }
+    
+    func initMSAL() throws {
+        guard let authorityURL = URL(string: kAuthority) else {
+            print("Unable to create authority URL")
+            return
+        }
+        
+        let authority = try MSALAADAuthority(url: authorityURL)
+        
+        let msalConfiguration = MSALPublicClientApplicationConfig(
+            clientId: kClientID,
+            redirectUri: kRedirectUri,
+            authority: authority
+        )
+        self.applicationContext = try MSALPublicClientApplication(configuration: msalConfiguration)
+        self.initWebViewParams()
+    }
+    
+    func initWebViewParams() {
+        self.webViewParameters = MSALWebviewParameters(authPresentationViewController: self)
+    }
+    
+    func loadCurrentAccount(completion: @escaping (MSALAccount?) -> Void) {
+        
+        guard let applicationContext = self.applicationContext else { return }
+        
+        let msalParameters = MSALParameters()
+        msalParameters.completionBlockQueue = DispatchQueue.main
+        
+        applicationContext.getCurrentAccount(with: msalParameters, completionBlock: { (currentAccount, previousAccount, error) in
+            
+            if let error = error {
+                print("Couldn't query current account with error: \(error)")
+                return
+            }
+            
+            if let currentAccount = currentAccount {
+                print("Found a signed in account \(String(describing: currentAccount.username)). Updating data for that account...")
+                
+                completion(currentAccount)
+                return
+            }
+            
+            completion(nil)
+        })
+    }
+    
+    func acquireTokenInteractively() {
+        guard let applicationContext = self.applicationContext else { return }
+        guard let webViewParameters = self.webViewParameters else { return }
 
-    func loadMSALScreen()
-
+        let parameters = MSALInteractiveTokenParameters(scopes: kScopes, webviewParameters: webViewParameters)
+        parameters.promptType = .selectAccount
+        
+        applicationContext.acquireToken(with: parameters) { (result, error) in
+            
+            if let error = error {
+                
+                print("Could not acquire token: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let result = result else {
+                
+                print("Could not acquire token: No result returned")
+                return
+            }
+            
+//            self.accessToken = result.accessToken
+        }
+    }
+    
+    func acquireTokenSilently(_ account : MSALAccount!) {
+        guard let applicationContext = self.applicationContext else { return }
+        
+        let parameters = MSALSilentTokenParameters(scopes: self.kScopes, account: account)
+        
+        applicationContext.acquireTokenSilent(with: parameters) { (result, error) in
+            
+            if let error = error {
+                print("Could not acquire token silently: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let result = result else {
+                print("Could not acquire token: No result returned")
+                return
+            }
+            
+            print("Refreshed Access token is \(result.accessToken)")
+        }
+    }
 }

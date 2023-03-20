@@ -1,25 +1,23 @@
-//
-//  ContentView.swift
-//  SwiftUIMSAL
-//
-//  Created by robevans on 1/10/22.
-//
-
 import SwiftUI
+import MSAL
 
 struct ContentView: View {
-    @StateObject var msalModel: MSALScreenViewModel = MSALScreenViewModel()
+    @State var userName: String = ""
+    
+    init() {
+        print("content view init")
+    }
 
     var body: some View {
         VStack {
             Spacer()
-            Text("👋 \(msalModel.accountName)")
+            Text("👋 \(userName)")
                 .font(.largeTitle)
                 .padding()
             Button("Login with MSAL") {
-                msalModel.loadMSALScreen()
+//                msalModel.loadMSALScreen()
             }
-            MSALScreenView_UI(viewModel: msalModel)
+            MSALScreenView_UI(userName: $userName)
                 .frame(width: 250, height: 250, alignment: .center)
         }
     }
